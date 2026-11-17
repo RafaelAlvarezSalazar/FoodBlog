@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}Inicio{% endblock %} · FoodBlog Internacional</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header><div class="barra">
+    <a class="marca" href="{{ url_for('inicio') }}">FoodBlog <em>Internacional</em></a>
+    <nav aria-label="Principal">
+      <a href="{{ url_for('inicio') }}">Inicio</a>
+      <a href="{{ url_for('listado') }}">Recetas</a>
+      <a href="{{ url_for('buscar') }}">Buscar</a>
+      <a href="{{ url_for('publicar') }}">Publicar</a>
+      <a href="{{ url_for('ranking') }}">Ranking</a>
+      <a href="{{ url_for('estadisticas') }}">Estadísticas</a>
+    </nav>
+  </div></header>
+  <main>{% block contenido %}{% endblock %}</main>
+  <footer><a href="{{ url_for('static', filename='fotos/creditos.html') }}">Créditos de las fotografías</a></footer>
+</body>
+</html>

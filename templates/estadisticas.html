@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Estadísticas{% endblock %}
+{% block contenido %}
+<span class="etiqueta">El recetario en cifras</span>
+<h1>Estadísticas</h1>
+<dl class="cifras tarjetas">
+  <div class="tarjeta"><dt>Recetas publicadas</dt><dd>{{ resumen.total }}</dd></div>
+  <div class="tarjeta"><dt>Tiempo medio de preparación</dt><dd>{{ resumen.media|string|replace('.', ',') }} min</dd></div>
+  <div class="tarjeta"><dt>Total de «Me gusta»</dt><dd>{{ resumen.likes }}</dd></div>
+</dl>
+<a href="{{ url_for('ranking') }}">Ver las recetas más votadas →</a>
+{% endblock %}

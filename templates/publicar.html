@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Publicar una receta{% endblock %}
+{% block contenido %}
+<span class="etiqueta">Cuaderno de cocina</span>
+<h1>Publicar una receta</h1>
+<p>Comparte un plato de tu cocina. La foto es opcional.</p>
+{% if errores %}<p class="error" role="alert">La receta aún no se ha publicado. Revisa los campos marcados.</p>{% endif %}
+<form class="publicar" method="post" enctype="multipart/form-data">
+  {% for clave, etiqueta in [('nombre', 'Nombre de la receta'), ('pais', 'País'), ('categoria', 'Categoría'), ('tiempo', 'Tiempo total (minutos)'), ('ingredientes', 'Ingredientes'), ('preparacion', 'Preparación')] %}
+    <div>
+      <label for="{{ clave }}">{{ etiqueta }}</label>
+      {% if clave in ['ingredientes', 'preparacion'] %}
+        <textarea name="{{ clave }}" id="{{ clave }}" rows="4" required {% if clave in errores %}aria-invalid="true" aria-describedby="error-{{ clave }}"{% endif %}>{{ campos[clave] }}</textarea>
+      {% elif clave == 'categoria' %}
+        <select name="categoria" id="categoria" required {% if clave in errores %}aria-invalid="true" aria-describedby="error-categoria"{% endif %}>
+          <option value="">Elige una categoría</option>
+          {% for categoria in categorias %}<option {% if campos.categoria == categoria %}selected{% endif %}>{{ categoria }}</option>{% endfor %}
+        </select>
+      {% else %}
+        <input name="{{ clave }}" id="{{ clave }}" value="{{ campos[clave] }}" {% if clave == 'tiempo' %}type="number" min="1" step="1"{% endif %} required {% if clave in errores %}aria-invalid="true" aria-describedby="error-{{ clave }}"{% endif %}>
+      {% endif %}
+      {% if clave in errores %}<small class="error" id="error-{{ clave }}">{{ errores[clave] }}</small>{% endif %}
+    </div>
+  {% endfor %}
+  <div>
+    <label for="foto">Foto del plato (opcional)</label>
+    <input type="file" name="foto" id="foto" accept="image/jpeg,image/png,image/webp" aria-describedby="ayuda-foto{% if errores.foto %} error-foto{% endif %}" {% if errores.foto %}aria-invalid="true"{% endif %}>
+    <small id="ayuda-foto">JPG, PNG o WebP · Hasta 5 MB y 25 megapíxeles.{% if errores %} Si habías elegido una foto, vuelve a seleccionarla.{% endif %}</small>
+    {% if errores.foto %}<p class="error" id="error-foto">{{ errores.foto }}</p>{% endif %}
+  </div>
+  <button class="boton">Publicar receta</button>
+</form>
+{% endblock %}

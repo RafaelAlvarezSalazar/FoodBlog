@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block titulo %}Ranking{% endblock %}
+{% block contenido %}
+<span class="etiqueta">Las favoritas del recetario</span>
+<h1>Ranking de recetas</h1>
+<p>Las cinco recetas con más votos. En caso de empate, aparece primero la que se publicó antes.</p>
+{% if populares and populares[0].likes == 0 %}
+  <p>Todavía no hay votos. Abre una receta y pulsa «Me gusta» para elegir tu favorita.</p>
+{% endif %}
+<ol class="ranking">
+  {% for receta in populares %}
+    <li>
+      <a href="{{ url_for('detalle', receta_id=receta.id) }}">{{ receta.nombre }}</a>
+      <span>{{ receta.likes }} {{ 'voto' if receta.likes == 1 else 'votos' }}</span>
+    </li>
+  {% endfor %}
+</ol>
+{% endblock %}

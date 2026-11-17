@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block titulo %}Buscar recetas{% endblock %}
+{% block contenido %}
+<span class="etiqueta">Explorar el recetario</span>
+<h1>Buscar recetas</h1>
+<form class="buscador" method="get">
+  <label>Buscar por
+    <select id="criterio" name="criterio">
+      {% for clave, nombre in criterios.items() %}
+        <option value="{{ clave }}" {% if criterio == clave %}selected{% endif %}>{{ nombre }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <noscript><button name="cambiar" value="1" formnovalidate>Mostrar opciones</button></noscript>
+  <label>Valor
+    <select id="valor" name="valor" required>
+      <option value="">Selecciona una opción</option>
+      {% for opcion in opciones[criterio] %}
+        <option value="{{ opcion }}" {% if opcion|string == valor %}selected{% endif %}>{{ 'Hasta ' ~ opcion ~ ' min' if criterio == 'tiempo' else opcion }}</option>
+      {% endfor %}
+    </select>
+  </label>
+  <button class="boton">Buscar</button>
+</form>
+<script>
+  const opciones = {{ opciones|tojson }};
+  const criterio = document.getElementById("criterio");
+  const valor = document.getElementById("valor");
+  criterio.addEventListener("change", () => {
+    valor.replaceChildren(new Option("Selecciona una opción", ""));
+    for (const opcion of opciones[criterio.value]) {
+      const texto = criterio.value === "tiempo" ? "Hasta " + opcion + " min" : opcion;
+      valor.add(new Option(texto, opcion));
+    }
+  });
+</script>
+{% if error %}
+  <p role="alert">{{ error }}</p>
+{% elif resultados is not none %}
+  <h2>Resultados</h2>
+  {% if resultados %}
+    <div class="tarjetas">{% for receta in resultados %}{% include "_tarjeta.html" %}{% endfor %}</div>
+  {% else %}
+    <p>No se han encontrado recetas con ese criterio.</p>
+  {% endif %}
+{% endif %}
+{% endblock %}

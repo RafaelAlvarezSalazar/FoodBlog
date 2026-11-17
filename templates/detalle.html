@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}{{ receta.nombre }}{% endblock %}
+{% block contenido %}
+<a href="{{ url_for('listado') }}">← Volver al recetario</a>
+<article class="ficha">
+  <span class="etiqueta">Receta {{ receta.id }} · {{ receta.pais }}</span>
+  <h1>{{ receta.nombre }}</h1>
+  {% set foto = url_foto(receta) %}
+  {% if foto %}
+    <img class="foto-ficha" src="{{ foto }}" alt="Fotografía de {{ receta.nombre }}">
+  {% endif %}
+  <p>{{ receta.categoria }} · {{ receta.tiempo }} minutos</p>
+  <form id="votos" class="votos" method="post" action="{{ url_for('dar_like', receta_id=receta.id) }}">
+    <button class="boton"><span aria-hidden="true">♡</span> Me gusta</button>
+    <span>{{ receta.likes }} {{ 'voto' if receta.likes == 1 else 'votos' }}</span>
+    <a href="{{ url_for('ranking') }}">Ver ranking</a>
+  </form>
+  <h2>Ingredientes</h2><p>{{ receta.ingredientes }}</p>
+  <h2>Preparación</h2><p>{{ receta.preparacion }}</p>
+</article>
+{% endblock %}

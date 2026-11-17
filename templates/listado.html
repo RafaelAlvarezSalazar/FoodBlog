@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block titulo %}Recetario{% endblock %}
+{% block contenido %}
+<span class="etiqueta">La colección · {{ recetas|length }} recetas</span>
+<h1>Recetario internacional</h1>
+<div class="tarjetas">
+  {% for receta in recetas %}
+    {% include "_tarjeta.html" %}
+  {% endfor %}
+</div>
+{% endblock %}

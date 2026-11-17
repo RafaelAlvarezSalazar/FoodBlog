@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block contenido %}
+<section class="portada">
+  <span class="etiqueta">Cuaderno de cocina · Recetas del mundo</span>
+  <h1>El mundo en tu mesa.</h1>
+  <p>De una tortilla de patatas a unos brigadeiros: descubre qué se cocina en otros países y cómo prepararlo en casa.</p>
+  <div class="acciones-portada">
+    <a class="boton" href="{{ url_for('listado') }}">Explorar el recetario →</a>
+    <a class="boton sorpresa" href="{{ url_for('sorprendeme') }}">Sorpréndeme</a>
+  </div>
+</section>
+<h2>Últimas recetas</h2>
+<div class="tarjetas">{% for receta in ultimas %}{% include "_tarjeta.html" %}{% endfor %}</div>
+{% endblock %}
