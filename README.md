@@ -16,7 +16,7 @@ Necesitas **Python 3.11**. Para comprobar que está instalado, ejecuta `py -3.11
 Crea un entorno virtual para el proyecto e instala sus dependencias. El segundo comando instala **Flask**, que ejecuta la aplicación, y **Pillow**, que procesa las fotos. Solo necesitas hacerlo la primera vez:
 
 ```powershell
-py -3.11 -m venv .venv
+py -3.11 -m venv .venv *puedes poner tambien la version de python 3.xx*
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
